@@ -1,0 +1,18 @@
+table User {
+  id uuid [pk, not null, default: `uuid_generate_v4()`]
+  username varchar
+  password varchar
+  accountId uuid [ref: - Account.id]
+}
+
+table Account {
+  id uuid [pk, not null, default: `uuid_generate_v4()`]
+  balance numeric
+}
+
+table Transaction {
+  id uuid [pk, not null, default: `uuid_generate_v4()`]
+  debitedAccountId uuid [ref: > Account.id]
+  creditedAccountId uuid [ref: > Account.id]
+  value numeric
+}
