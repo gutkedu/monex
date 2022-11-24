@@ -2,7 +2,7 @@ defmodule Monex.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Monex.{Transaction, User}
+  alias Monex.User
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -11,10 +11,10 @@ defmodule Monex.Account do
   schema "account" do
     field :balance, :float, default: 100.0
 
-    belongs_to :user, User
+    has_one :user, User
 
-    has_many :cash_in_transactions, {"credited_account", Transaction}
-    has_many :cash_out_transactions, {"debited_account", Transaction}
+    # has_many :cash_in_transactions, {"credited_account", Transaction}
+    # has_many :cash_out_transactions, {"debited_account", Transaction}
 
     timestamps()
   end

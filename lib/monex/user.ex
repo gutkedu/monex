@@ -7,13 +7,13 @@ defmodule Monex.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
 
-  @required_params [:username, :password]
+  @required_params [:username, :password, :account_id]
 
   schema "user" do
     field :username, :string
-    field :name, :string
+    field :password, :string
 
-    has_one :account, Account
+    belongs_to :account, Account
 
     timestamps()
   end
@@ -22,8 +22,11 @@ defmodule Monex.User do
     %__MODULE__{}
     |> cast(params, @required_params)
     |> validate_required(@required_params)
-    |> validate_length(:name, min: 3, max: 25)
-    |> validate_format(:email, ~r/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/)
+    |> validate_length(:username, min: 3, max: 25)
+    |> validate_format(
+      :password,
+      ~r/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/
+    )
     |> unique_constraint([:username])
   end
 end
