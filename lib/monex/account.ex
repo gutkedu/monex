@@ -5,7 +5,7 @@ defmodule Monex.Account do
   alias Monex.{Transaction, User}
 
   @primary_key {:id, :binary_id, autogenerate: true}
-
+  @foreign_key_type :binary_id
   @required_params [:balance]
 
   schema "account" do
